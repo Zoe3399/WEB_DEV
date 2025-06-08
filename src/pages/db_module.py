@@ -1,6 +1,6 @@
 # db_module.py
 from sqlalchemy import create_engine # type: ignore
-import duckdb
+import duckdb # type: ignore
 
 DB_URI = "postgresql://postgres:1234@127.0.0.1:5432/postgres"
 engine = create_engine(DB_URI, echo=False)
