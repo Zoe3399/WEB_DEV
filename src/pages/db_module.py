@@ -2,7 +2,7 @@
 from sqlalchemy import create_engine # type: ignore
 import duckdb # type: ignore
 
-DB_URI = "postgresql://postgres:1234@127.0.0.1:5432/postgres"
+DB_URI = "postgresql://streamlit_admin:root1234%40@pg-353kr8.vpc-pub-cdb-kr.ntruss.com:5432/streamlit_db"
 engine = create_engine(DB_URI, echo=False)
 
 # DuckDB 파일 경로 (config 등에서 import해도 됨)
