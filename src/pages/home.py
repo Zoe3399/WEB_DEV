@@ -35,10 +35,13 @@ def show_home():
 
     @st.cache_data
     def load_geojson():
-        with open('./data/법정구역_시군구_simplified.geojson', encoding='utf-8') as f:
-            geojson = json.load(f)
-        return geojson
+        base_path = os.path.dirname(os.path.abspath(__file__))  # 현재 home.py 기준
+        file_path = os.path.join(base_path, 'data', '법정구역_시군구_simplified.geojson')
 
+        with open(file_path, encoding='utf-8') as f:
+            geojson = json.load(f)
+    
+        return geojson
     @st.cache_data
     def load_accident_sum(region_code=None):
         # 3년간 합계
