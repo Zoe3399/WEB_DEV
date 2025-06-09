@@ -1,8 +1,14 @@
-from sqlalchemy import create_engine, text
+import psycopg2
 
-DB_URI = "postgresql://postgres:1234@127.0.0.1:5432/postgres"
-engine = create_engine(DB_URI, echo=True)
-
-with engine.connect() as connection:
-    result = connection.execute(text("SELECT 1"))  # text로 감싸기
-    print(result.fetchall())
+try:
+    conn = psycopg2.connect(
+        host="pg-353kr8.vpc-pub-cdb-kr.ntruss.com",
+        port=5432,
+        dbname="streamlit_db",
+        user="streamlit_admin",
+        password="root1234@"
+    )
+    print("✅ 연결 성공")
+    conn.close()
+except Exception as e:
+    print("❌ 연결 실패:", e)
