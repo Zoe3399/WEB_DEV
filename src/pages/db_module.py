@@ -8,6 +8,5 @@ DUCKDB_PATH = "./data_csv/mydb.duckdb"
 def get_duckdb_conn(db_path=DUCKDB_PATH):
     return duckdb.connect(db_path)
 
-# PostgreSQL 연결 함수
-def get_pg_engine(db_uri=DB_URI):
-    return create_engine(db_uri)
+# PostgreSQL 엔진 객체 (모든 코드에서 바로 import 가능)
+engine = create_engine(DB_URI)
