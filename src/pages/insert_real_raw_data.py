@@ -6,8 +6,8 @@ DB_URI = "postgresql://streamlit_admin:root1234%40@pg-353kr8.vpc-pub-cdb-kr.ntru
 engine = create_engine(DB_URI)
 
 # 데이터 파일 경로
-file1 = 'preprocessed_data/시도_시군구별_보행자_사고_사고유형_전처리ver.csv'
-file2 = 'preprocessed_data/시도_시군구_시간대별_노인교통사고_전처리ver.csv'
+file1 = '../../../preprocessed_data/시도_시군구별_보행자_사고_사고유형_전처리ver.csv'
+file2 = '../../../preprocessed_data/시도_시군구_시간대별_노인교통사고_전처리ver.csv'
 
 try:
     # 파일 존재 체크
