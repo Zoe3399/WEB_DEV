@@ -1,8 +1,10 @@
-import streamlit as st
-import pandas as pd
-import folium
+import os
 import json
-from streamlit_folium import st_folium
+import streamlit as st # type: ignore
+import pandas as pd # type: ignore
+import folium # type: ignore
+import json
+from streamlit_folium import st_folium # type: ignore
 from sidebar import sidebar_menu
 from db_module import engine
 from map_utils import style_polygon, highlight_style, get_polygon_tooltip, find_region_by_coordinate
