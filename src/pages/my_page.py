@@ -16,9 +16,9 @@ def my_page():
         return
 
     # --- 2. 내 정보 표시 (DB에서 이메일 기준 조회) ---
-    user_email = st.session_state.get("user_id")
+    user_email = st.session_state.get("user_email")  # 키명 통일
     query = """
-    SELECT email, user_type, created_at, last_login
+    SELECT email, user_type, created_at
     FROM users
     WHERE email = :e
     """
@@ -28,8 +28,7 @@ def my_page():
         st.info(
             f"**이메일:** {user['email']}  \n"
             f"**사용자 유형:** {user['user_type']}  \n"
-            f"**가입일:** {user['created_at']}  \n"
-            f"**최근 로그인:** {user['last_login']}"
+            f"**가입일:** {user['created_at']}"
         )
     else:
         st.error("사용자 정보를 불러오지 못했습니다.")
@@ -42,7 +41,7 @@ def my_page():
     query2 = """
     SELECT downloaded_at, region_code, file_type
     FROM download_log
-    WHERE user_id = (SELECT id FROM users WHERE email = :e)
+    WHERE user_email = :e
     ORDER BY downloaded_at DESC
     LIMIT 10
     """

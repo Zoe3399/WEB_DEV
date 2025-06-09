@@ -100,14 +100,21 @@ def show_home():
                 info = filtered.iloc[0]
                 # 3년간 합계
                 summary = load_accident_sum(info['region_code'])
-                accident_total = int(summary["death"][0] + summary["severe"][0] + summary["minor"][0])
+                if summary.empty:
+                    st.warning("해당 지역 데이터가 없습니다.")
+                    accident_total = death = severe = minor = 0
+                else:
+                    death = int(summary["death"][0]) if pd.notna(summary["death"][0]) else 0
+                    severe = int(summary["severe"][0]) if pd.notna(summary["severe"][0]) else 0
+                    minor = int(summary["minor"][0]) if pd.notna(summary["minor"][0]) else 0
+                    accident_total = death + severe + minor
                 st.markdown(f"### {region} 상세정보")
                 st.markdown("※ 최근 3년간 사고 통계")
                 col1, col2, col3, col4 = st.columns(4)
                 col1.metric("사고건수", accident_total)
-                col2.metric("사망자", int(summary["death"][0]))
-                col3.metric("중상자", int(summary["severe"][0]))
-                col4.metric("경상자", int(summary["minor"][0]))
+                col2.metric("사망자", death)
+                col3.metric("중상자", severe)
+                col4.metric("경상자", minor)
 
                 # 기타 정보
                 st.markdown(f"- **행정구역 코드:** {info['region_code']}")
@@ -117,11 +124,18 @@ def show_home():
 
                 # 전국/선택지역 비교
                 nation_sum = load_accident_sum()
+                if nation_sum.empty:
+                    nation_death = nation_severe = nation_minor = 0
+                else:
+                    nation_death = int(nation_sum["death"][0]) if pd.notna(nation_sum["death"][0]) else 0
+                    nation_severe = int(nation_sum["severe"][0]) if pd.notna(nation_sum["severe"][0]) else 0
+                    nation_minor = int(nation_sum["minor"][0]) if pd.notna(nation_sum["minor"][0]) else 0
+
                 comp_df = pd.DataFrame({
                     "구분": ["선택지역", "전국"],
-                    "사망자": [summary["death"][0], nation_sum["death"][0]],
-                    "중상자": [summary["severe"][0], nation_sum["severe"][0]],
-                    "경상자": [summary["minor"][0], nation_sum["minor"][0]],
+                    "사망자": [death, nation_death],
+                    "중상자": [severe, nation_severe],
+                    "경상자": [minor, nation_minor],
                 })
                 st.markdown("#### 전국/선택지역 사고 비교")
                 st.dataframe(comp_df, use_container_width=True, hide_index=True)
